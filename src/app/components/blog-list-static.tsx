@@ -8,7 +8,7 @@ async function fetchBlogs() {
     headers: new Headers({
       apikey: process.env.apikey as string,
     }),
-    cache: 'no-store',
+    cache: 'force-cache',
   })
   if (!res.ok) {
     throw new Error('サーバーエラーです blogs')
