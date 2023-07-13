@@ -1,13 +1,11 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function NavBar() {
-    return (
-        <header>
-            <nav>
-                <Link href='/'>
-                    Home
-                </Link>
-                {/* <Link href='/blogs'>
+  return (
+    <header>
+      <nav>
+        <Link href="/">Home</Link>
+        {/* <Link href='/blogs'>
                     blogs
                 </Link>
                 <Link href='/streaming-sr'>
@@ -16,7 +14,7 @@ export default function NavBar() {
                 <Link href='/auth'>
                     Auth
                 </Link> */}
-            </nav>
-        </header>
-    )
+      </nav>
+    </header>
+  )
 }
