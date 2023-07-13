@@ -3,6 +3,7 @@ import Image from 'next/image'
 import NotesList from './components/notes-list'
 import TimerCounter from './components/timer-counter'
 import Spinner from './components/spinner'
+import RefreshButton from './components/refresh-button'
 
 // NOTE: デフォルトはサーバーコンポーネント(SC)
 export default function Page() {
@@ -24,6 +25,7 @@ export default function Page() {
       {/* CC(クライアントコンポーネント) */}
       {/* SCにCCはimportできる。逆は不可だが、例外的にCCのchildrenとしてSCを渡すのは可能(function全体としてはSC) */}
       <TimerCounter />
+      <RefreshButton />
     </main>
   )
 }
