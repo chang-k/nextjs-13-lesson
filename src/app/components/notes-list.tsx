@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 type Note = Database['public']['Tables']['notes']['Row']
 
 async function fetchNotes() {
-  // await new Promise((resolve) => setTimeout(resolve, 2000))
+  await new Promise((resolve) => setTimeout(resolve, 2000))
   // NOTE: https://app.supabase.com/project/(url)/api?resource=notes でBashでfetchするver
   const res = await fetch(`${process.env.url}/rest/v1/notes?select=*`, {
     headers: new Headers({

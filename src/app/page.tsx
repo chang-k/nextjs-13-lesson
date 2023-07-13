@@ -1,6 +1,8 @@
+import { Suspense } from 'react'
 import Image from 'next/image'
 import NotesList from './components/notes-list'
 import TimerCounter from './components/timer-counter'
+import Spinner from './components/spinner'
 
 // NOTE: デフォルトはサーバーコンポーネント(SC)
 export default function Page() {
@@ -15,7 +17,10 @@ export default function Page() {
         priority
       />
       {/* SC */}
-      <NotesList />
+      {/* Suspenseのおかげで他のCCを先にレンダリングしfetchを非同期で待つことができる */}
+      <Suspense fallback={<Spinner color="border-red-500" />}>
+        <NotesList />
+      </Suspense>
       {/* CC(クライアントコンポーネント) */}
       {/* SCにCCはimportできる。逆は不可だが、例外的にCCのchildrenとしてSCを渡すのは可能(function全体としてはSC) */}
       <TimerCounter />
