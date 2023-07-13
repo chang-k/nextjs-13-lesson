@@ -5,13 +5,11 @@ export default function NavBar() {
     <header>
       <nav>
         <Link href="/">Home</Link>
-        {/* <Link href='/blogs'>
-                    blogs
-                </Link>
-                <Link href='/streaming-sr'>
+        <Link href="/blogs">blogs</Link>
+        {/* <Link href='/streaming-sr'>
                     Streaming SR
-                </Link>
-                <Link href='/auth'>
+                </Link> */}
+        {/* <Link href='/auth'>
                     Auth
                 </Link> */}
       </nav>
