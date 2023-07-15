@@ -24,8 +24,10 @@ export default async function NotesList() {
   const notes = await fetchNotes()
   return (
     <div>
-      <p>Notes</p>
-      <ul>
+      <p className="my-4 pb-3 text-xl font-medium underline underline-offset-4">
+        Notes
+      </p>
+      <ul className="m-3">
         {notes.map((n) => (
           <li key={n.id}>
             <p>{n.title}</p>

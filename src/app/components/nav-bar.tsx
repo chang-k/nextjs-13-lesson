@@ -2,10 +2,15 @@ import Link from 'next/link'
 
 export default function NavBar() {
   return (
-    <header>
-      <nav>
+    <header className="bg-gray-800 p-4">
+      <nav className="space-x-4">
         {/* <Link href="/">Home</Link> */}
-        <Link href="/blogs">blogs</Link>
+        <Link
+          href="/blogs"
+          className="rounded bg-gray-700 px-3 py-2 text-white hover:bg-gray-500"
+        >
+          blogs
+        </Link>
         {/* <Link href='/streaming-sr'>
                     Streaming SR
                 </Link> */}

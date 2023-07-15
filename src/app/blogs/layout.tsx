@@ -9,16 +9,16 @@ export default function BlogLayout({
   children: React.ReactNode
 }) {
   return (
-    <section>
-      <aside>
+    <section className="flex">
+      <aside className={`h-[calc(100vh-56px)] w-1/4 bg-gray-200 p-2`}>
         <Suspense fallback={<Spinner color="border-green-500" />}>
           <BlogListStatic />
         </Suspense>
-        <div>
+        <div className="flex justify-center">
           <RefreshButton />
         </div>
       </aside>
-      <main>{children}</main>
+      <main className="flex flex-1 justify-center">{children}</main>
     </section>
   )
 }

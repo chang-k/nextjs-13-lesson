@@ -1,3 +1,3 @@
 export default function NotFound() {
-  return <div>Blogが見つかりません</div>
+  return <div className="my-6">Blogが見つかりません</div>
 }
