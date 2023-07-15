@@ -24,7 +24,7 @@ export default function Auth() {
       if (error) {
         alert(error.message)
       } else {
-        push('/')
+        push('/auth/todo-crud')
       }
     } else {
       const { error } = await supabase.auth.signUp({

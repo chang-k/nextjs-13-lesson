@@ -27,12 +27,12 @@ export default function SupabaseListener({
     supabase.auth.onAuthStateChange((_, session) => {
       updateLoginUser({ id: session?.user.id, email: session?.user.email })
       // サーバーサイドのトークン(accessToken)とクライアントサイドのトークン(session?.access_token)が一致しない場合、refresh()でサーバーコンポーネントを再実行する
-      if (session?.access_token === accessToken) {
-        alert('セッション違い！')
+      if (session?.access_token !== accessToken) {
+        // alert('セッション違い！')
         refresh()
       }
     })
-  }, [accessToken])
+  }, [accessToken, refresh, updateLoginUser])
 
   return null
 }
