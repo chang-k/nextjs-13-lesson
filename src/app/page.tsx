@@ -19,7 +19,7 @@ export default function Page() {
       />
       {/* SC */}
       {/* Suspenseのおかげで他のCCを先にレンダリングしfetchを非同期で待つことができる */}
-      <Suspense fallback={<Spinner color="border-red-500" />}>
+      <Suspense fallback={<Spinner color="#8d6449" />}>
         <NotesList />
       </Suspense>
       {/* CC(クライアントコンポーネント) */}
