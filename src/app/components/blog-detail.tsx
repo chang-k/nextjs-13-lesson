@@ -28,7 +28,7 @@ export default function BlogDetail({ blog }: { blog: Blog }) {
         </p>
       </SideModal>
       <Link href="/blogs">
-        <ArrowUturnLeftIcon className="mt-3 h-6 w-6 cursor-pointer text-blue-500" />
+        <ArrowUturnLeftIcon width={150} />
       </Link>
     </div>
   )

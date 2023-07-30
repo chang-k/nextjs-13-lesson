@@ -1,6 +1,7 @@
 import React, { useRef, type ReactNode, useEffect } from 'react'
 import * as styles from './sideModal.css'
 import { useClickOutside } from '../hooks/useClickOutside'
+import { useKeydown } from '../hooks/useKeydown'
 
 type Props = {
   isOpen: boolean
@@ -14,6 +15,7 @@ export const SideModal = ({ isOpen, onClose, children }: Props) => {
   // NOTE: const ref=useOutsideClick(onClose) って感じでrefを受け取りながらuseEffectするのもあり
   // 現在はdiv以外の他のElementも渡せるようにするため一応以下のようにしている
   useClickOutside(ref, onClose)
+  useKeydown(isOpen, 'Escape', onClose)
 
   return (
     <div
