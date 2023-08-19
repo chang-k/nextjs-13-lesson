@@ -1,8 +1,8 @@
 'use client'
 
-import React, { Suspense, lazy, useCallback, useState } from 'react'
+import React, { Suspense, useCallback, useState } from 'react'
 import { SideModal } from './common/sideModal'
-import dynamic from 'next/dynamic'
+import BlogDetailLazy from './blog-detail-lazy'
 
 type Props = {
   blogs: {
@@ -10,8 +10,6 @@ type Props = {
     title: string | null
   }[]
 }
-
-const BlogDetailLazy = dynamic(() => import('./blog-detail-lazy'))
 
 export default function BlogDetailButton({ blogs }: Props) {
   const [isOpen, setIsOpen] = useState(false)
@@ -42,15 +40,6 @@ export default function BlogDetailButton({ blogs }: Props) {
         ))}
       </ul>
       <SideModal isOpen={isOpen} onClose={() => toggleModal(false)}>
-        {/* <p>Blog Title: {blog.title}</p>
-        <p>Blog Content: {blog.content}</p>
-        <p>
-          Blog Created at:
-          {format(new Date(blog.created_at), 'yyyy/MM/dd HH:mm:ss')}
-        </p> */}
-
-        {/* 以下のように、ここでopenした時にfetchしたい */}
-        {/* <SideModalChildren /> */}
         <Suspense fallback={<p>Loading...!</p>}>
           <BlogDetailLazy blogId={blogId} />
         </Suspense>

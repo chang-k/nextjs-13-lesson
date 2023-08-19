@@ -15,6 +15,7 @@ export default function BlogLayout({
           <BlogListStatic />
         </Suspense>
         <div className="flex justify-center">
+          {/* MEMO: fetchに失敗すると成功するまでRefreshし、結果無限ループする、かも */}
           <RefreshButton />
         </div>
       </aside>
