@@ -1,13 +1,14 @@
-export default function Spinner({
-  color = 'border-blue-500',
-}: {
+import * as React from 'react'
+import { spinnerStyle } from './spinner.css'
+
+type Props = {
   color?: string
-}) {
+}
+
+export default function Spinner({ color = 'blue' }: Props) {
   return (
-    <div className="my-16 flex justify-content">
-      <div
-        className={`h-10 w-10 animate-spin rounded-full border-4 ${color} border-t-transparent`}
-      />
+    <div>
+      <div className={spinnerStyle} style={{ color }} />
     </div>
   )
 }
