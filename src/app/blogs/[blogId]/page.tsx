@@ -1,3 +1,5 @@
+// TODO: 現在導線無し
+
 import type { Database } from '../../../../database.types'
 import { notFound } from 'next/navigation'
 import BlogDetail from '@/app/components/blog-detail'
