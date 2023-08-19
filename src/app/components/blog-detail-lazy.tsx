@@ -7,7 +7,7 @@ type Props = {
 async function fetchBlog(blogId: string) {
   if (blogId === '') return
   const res = await fetch(
-    `${process.env.url}/rest/v1/blogs?id=eq.${blogId}&select=*`,
+    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/blogs?id=eq.${blogId}&select=*`,
     {
       headers: new Headers({
         apikey: process.env.apikey as string,
