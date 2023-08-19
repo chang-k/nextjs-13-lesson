@@ -11,7 +11,7 @@ type Props = {
   }[]
 }
 
-export default function BlogDetailButton({ blogs }: Props) {
+export default function BlogButtonList({ blogs }: Props) {
   const [isOpen, setIsOpen] = useState(false)
   const [blogId, setBlogId] = useState('')
 

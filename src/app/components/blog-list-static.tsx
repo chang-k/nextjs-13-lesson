@@ -1,7 +1,7 @@
 import type { Database } from '../../../database.types'
 import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { headers, cookies } from 'next/headers'
-import BlogDetailButton from './blog-detail-button'
+import BlogButtonList from './blog-button-list'
 
 export default async function BlogListStatic() {
   const supabase = createServerComponentSupabaseClient<Database>({
@@ -14,7 +14,7 @@ export default async function BlogListStatic() {
   return (
     <div>
       <p>Blogs</p>
-      <BlogDetailButton blogs={blogs} />
+      <BlogButtonList blogs={blogs} />
     </div>
   )
 }
