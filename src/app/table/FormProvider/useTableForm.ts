@@ -3,19 +3,25 @@
 import { useForm } from 'react-hook-form'
 
 export type TableForm = {
-  tableData: TableCell[]
+  tableData: TableRow[]
 }
 
-type TableCell = {
+export type TableRow = {
+  id: number
+  rowTitle: string
+  childrenArray?: (TableCell | null)[]
+}
+
+export type TableCell = {
   id: number
   title: string
-  childrenArray?: TableCell[]
+  childrenArray?: (TableCell | null)[]
 }
 
 const DEFAULT_VALUES: TableForm['tableData'] = [
   {
     id: 1,
-    title: 'one',
+    rowTitle: '1行目',
     childrenArray: [
       {
         id: 10,
@@ -26,18 +32,26 @@ const DEFAULT_VALUES: TableForm['tableData'] = [
         ],
       },
       { id: 11, title: 'one' },
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
     ],
   },
   {
     id: 2,
-    title: 'one',
+    rowTitle: '2行目',
     childrenArray: [
       { id: 20, title: 'one' },
       { id: 21, title: 'one' },
       { id: 22, title: 'one' },
-      { id: 23, title: 'one' },
-      { id: 24, title: 'one' },
-      { id: 25, title: 'one' },
+      null,
+      null,
+      null,
       { id: 26, title: 'one' },
       { id: 27, title: 'one' },
       { id: 28, title: 'one' },
@@ -46,16 +60,23 @@ const DEFAULT_VALUES: TableForm['tableData'] = [
   },
   {
     id: 3,
-    title: 'one',
+    rowTitle: '3行目',
     childrenArray: [
       { id: 30, title: 'one' },
       { id: 31, title: 'one' },
       { id: 32, title: 'one' },
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
     ],
   },
   {
     id: 4,
-    title: 'one',
+    rowTitle: '4行目',
     childrenArray: [
       { id: 40, title: 'one' },
       { id: 41, title: 'one' },
@@ -71,7 +92,7 @@ const DEFAULT_VALUES: TableForm['tableData'] = [
   },
   {
     id: 5,
-    title: 'one',
+    rowTitle: '5行目',
     childrenArray: [
       { id: 50, title: 'one' },
       { id: 51, title: 'one' },
@@ -87,7 +108,7 @@ const DEFAULT_VALUES: TableForm['tableData'] = [
   },
   {
     id: 6,
-    title: 'one',
+    rowTitle: '6行目',
     childrenArray: [
       { id: 60, title: 'one' },
       { id: 61, title: 'one' },
@@ -103,7 +124,7 @@ const DEFAULT_VALUES: TableForm['tableData'] = [
   },
   {
     id: 7,
-    title: 'one',
+    rowTitle: '7行目',
     childrenArray: [
       { id: 70, title: 'one' },
       { id: 71, title: 'one' },
@@ -119,7 +140,7 @@ const DEFAULT_VALUES: TableForm['tableData'] = [
   },
   {
     id: 8,
-    title: 'one',
+    rowTitle: '8行目',
     childrenArray: [
       { id: 80, title: 'one' },
       { id: 81, title: 'one' },
@@ -135,7 +156,7 @@ const DEFAULT_VALUES: TableForm['tableData'] = [
   },
   {
     id: 9,
-    title: 'one',
+    rowTitle: '9行目',
     childrenArray: [
       { id: 90, title: 'one' },
       { id: 91, title: 'one' },
