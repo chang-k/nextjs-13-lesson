@@ -28,6 +28,12 @@ export default function NavBar() {
         >
           Auth
         </Link>
+        <Link
+          href="/table"
+          className="rounded bg-gray-700 px-3 py-2 text-white hover:bg-gray-500"
+        >
+          Table
+        </Link>
       </nav>
     </header>
   )
