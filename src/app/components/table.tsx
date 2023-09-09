@@ -7,10 +7,11 @@ import { Tb, Tr, firstTh } from './table.css'
 import Td from './td'
 
 export default function Table() {
-  const { handleSubmit, control } = useFormContext<TableForm>()
+  const { handleSubmit, control, getValues } = useFormContext<TableForm>()
 
-  // 入力のたびにこれがwatchされる
-  const fields = useWatch({ control, name: 'tableData' })
+  // 入力のたびにこれがwatchされる Functions as a Child and Render Props
+  //   const fields = useWatch({ control, name: 'tableData' })
+  const fields = getValues('tableData')
 
   console.log('fields', fields)
 
