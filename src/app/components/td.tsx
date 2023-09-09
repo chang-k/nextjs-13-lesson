@@ -16,6 +16,8 @@ export default function Td({ accesorName, fieldRowCol }: Props) {
     fieldRowCol === null ? 'button' : 'text'
   )
 
+  const [colTitle, setColTitle] = useState(fieldRowCol?.title ?? '')
+
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === 'Enter' && mode === 'edit') {
@@ -30,13 +32,7 @@ export default function Td({ accesorName, fieldRowCol }: Props) {
   if (mode === 'button') {
     return (
       <td>
-        <button
-          type="button"
-          onClick={() => {
-            console.log('ID button', accesorName)
-            setMode('edit')
-          }}
-        >
+        <button type="button" onClick={() => setMode('edit')}>
           +
         </button>
       </td>
@@ -45,15 +41,8 @@ export default function Td({ accesorName, fieldRowCol }: Props) {
   if (mode === 'text') {
     return (
       <td>
-        {fieldRowCol?.title}
-        <button
-          onClick={() => {
-            console.log('ID edit', accesorName)
-            setMode('edit')
-          }}
-        >
-          編集
-        </button>
+        {colTitle}
+        <button onClick={() => setMode('edit')}>編集</button>
       </td>
     )
   }
@@ -61,6 +50,14 @@ export default function Td({ accesorName, fieldRowCol }: Props) {
     <td>
       <input
         {...register(accesorName)}
+        onChange={(e) => {
+          register(accesorName).onChange(e)
+          setColTitle(e.target.value)
+        }}
+        onBlur={(e) => {
+          register(accesorName).onBlur(e)
+          setMode('text')
+        }}
         // onKeyDown={(event) => {
         //   if (event.key === 'Enter') {
         //     event.preventDefault()
