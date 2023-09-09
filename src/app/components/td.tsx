@@ -10,10 +10,7 @@ type Props = {
 }
 
 export default function Td({ accesorName, fieldRowCol }: Props) {
-  const { register } = useFormContext<TableForm>()
-  console.log('register(accesorName)', register(accesorName).ref)
-
-  const inputRef = useRef<HTMLInputElement>(null)
+  const { register, setFocus } = useFormContext<TableForm>()
 
   const [mode, setMode] = useState<'button' | 'text' | 'edit'>(
     fieldRowCol === null ? 'button' : 'text'
@@ -36,17 +33,14 @@ export default function Td({ accesorName, fieldRowCol }: Props) {
       }
     }
     window.addEventListener('keydown', handleKeyDown)
-    console.log('useEffect')
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [mode, colTitle, composing])
+  }, [composing])
 
   useEffect(() => {
-    if (!!inputRef.current && mode === 'edit') {
-      inputRef.current.focus()
-      console.log('useEffect2')
+    if (mode === 'edit') {
+      setFocus(accesorName)
     }
-    console.log('useEffect3')
-  }, [inputRef, mode])
+  }, [mode])
 
   if (mode === 'button') {
     return (
@@ -71,7 +65,6 @@ export default function Td({ accesorName, fieldRowCol }: Props) {
     <td>
       <input
         {...register(accesorName)}
-        ref={inputRef}
         value={colTitle}
         onChange={(e) => {
           register(accesorName).onChange(e)
