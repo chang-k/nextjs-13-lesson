@@ -7,49 +7,13 @@ import { Tb, Tr, firstTh } from './table.css'
 import Td from './td'
 
 export default function Table() {
-  const { handleSubmit, control, getValues } = useFormContext<TableForm>()
+  const { handleSubmit, getValues } = useFormContext<TableForm>()
 
-  // 入力のたびにこれがwatchされる Functions as a Child and Render Props
-  //   const fields = useWatch({ control, name: 'tableData' })
   const fields = getValues('tableData')
-
-  console.log('fields', fields)
 
   const onSubmit = (data: TableForm) => {
     console.log('Submit', data)
   }
-
-  //   データにnullが入ってくる前提にしたから使ってないけど消すのも勿体無いから残す
-  //   const mostLength = useMemo(() => {
-  //     const mostLength = fields.reduce(
-  //       (previousValue: number, currentValue: TableCell) => {
-  //         if (!currentValue.childrenArray) return 0
-  //         return previousValue > currentValue.childrenArray.length
-  //           ? previousValue
-  //           : currentValue.childrenArray.length
-  //       },
-  //       0
-  //     )
-  //     return mostLength
-  //   }, [fields])
-
-  //   const fieldsAfter: TableCell[] = fields.map((f) => {
-  //     if (!f.childrenArray) {
-  //       return { ...f, childrenArray: new Array(mostLength) }
-  //     }
-  //     if (f.childrenArray.length < mostLength) {
-  //       let array = [...f.childrenArray] as (TableCell | null)[]
-  //       for (
-  //         let index = 0;
-  //         index < mostLength - f.childrenArray.length;
-  //         index++
-  //       ) {
-  //         array.push(null)
-  //       }
-  //       return { ...f, childrenArray: array }
-  //     }
-  //     return f
-  //   })
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
