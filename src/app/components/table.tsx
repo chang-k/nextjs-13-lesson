@@ -1,18 +1,49 @@
 'use client'
 
-import React from 'react'
-import { useFormContext, useWatch } from 'react-hook-form'
+import React, { useState } from 'react'
+import { useFormContext } from 'react-hook-form'
 import { type TableForm } from '../table/FormProvider/useTableForm'
 import { Tb, Tr, firstTh } from './table.css'
 import Td from './td'
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  type DropResult,
+  resetServerContext,
+} from 'react-beautiful-dnd'
 
 export default function Table() {
-  const { handleSubmit, getValues } = useFormContext<TableForm>()
+  resetServerContext()
 
-  const fields = getValues('tableData')
+  const { handleSubmit, getValues, setValue } = useFormContext<TableForm>()
+
+  const [fields, setFields] = useState(getValues('tableData'))
+  console.log('fields', fields)
 
   const onSubmit = (data: TableForm) => {
     console.log('Submit', data)
+  }
+
+  const onDragEnd = (result: DropResult) => {
+    const { source, destination } = result
+    console.log('source destination DnD', source, destination)
+
+    if (!destination) return
+    // fields配列のコピーを作成
+    const reorderedFields = [...fields]
+    console.log('reorderedFields0', reorderedFields)
+
+    // ドラッグ元の位置から要素を取り出す
+    const [removed] = reorderedFields.splice(source.index, 1)
+
+    // ドラッグ先の位置に要素を挿入
+    reorderedFields.splice(destination.index, 0, removed)
+
+    console.log('reorderedFields1', reorderedFields)
+
+    setFields(reorderedFields)
+    setValue('tableData', reorderedFields)
   }
 
   return (
@@ -33,20 +64,43 @@ export default function Table() {
             <th>Header10</th>
           </tr>
         </thead>
-        <tbody>
-          {fields.map((fieldRow, rowIndex) => (
-            <tr className={Tr} key={rowIndex}>
-              <td className={firstTh}>{fieldRow.rowTitle}</td>
-              {fieldRow.childrenArray?.map((fieldRowCol, colIndex) => (
-                <Td
-                  fieldRowCol={fieldRowCol}
-                  accesorName={`tableData.${rowIndex}.childrenArray.${colIndex}.title`}
-                  key={`tableData.${rowIndex}.childrenArray.${colIndex}.title`}
-                />
-              ))}
-            </tr>
-          ))}
-        </tbody>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="table-body">
+            {(provided) => (
+              <tbody ref={provided.innerRef} {...provided.droppableProps}>
+                {fields.map((fieldRow, rowIndex) => (
+                  <Draggable
+                    key={rowIndex}
+                    draggableId={`${rowIndex}`}
+                    index={rowIndex}
+                  >
+                    {(provided) => (
+                      <tr
+                        className={Tr}
+                        key={rowIndex}
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <td className={firstTh}>{fieldRow.rowTitle}</td>
+                        {fieldRow.childrenArray?.map(
+                          (fieldRowCol, colIndex) => (
+                            <Td
+                              fieldRowCol={fieldRowCol}
+                              accesorName={`tableData.${rowIndex}.childrenArray.${colIndex}.title`}
+                              key={`tableData.${rowIndex}.childrenArray.${colIndex}.title`}
+                            />
+                          )
+                        )}
+                      </tr>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </tbody>
+            )}
+          </Droppable>
+        </DragDropContext>
       </table>
       <button type="submit">Submit</button>
     </form>
