@@ -80,9 +80,10 @@ export default function Table() {
                         key={rowIndex}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
-                        {...provided.dragHandleProps}
                       >
-                        <td className={firstTh}>{fieldRow.rowTitle}</td>
+                        <td className={firstTh} {...provided.dragHandleProps}>
+                          {fieldRow.rowTitle}
+                        </td>
                         {fieldRow.childrenArray?.map(
                           (fieldRowCol, colIndex) => (
                             <Td
