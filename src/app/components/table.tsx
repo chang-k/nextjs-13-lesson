@@ -19,7 +19,6 @@ export default function Table() {
   const { handleSubmit, getValues, setValue } = useFormContext<TableForm>()
 
   const [fields, setFields] = useState(getValues('tableData'))
-  console.log('fields', fields)
 
   const onSubmit = (data: TableForm) => {
     console.log('Submit', data)
@@ -27,21 +26,13 @@ export default function Table() {
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result
-    console.log('source destination DnD', source, destination)
-
     if (!destination) return
     // fields配列のコピーを作成
-    const reorderedFields = [...fields]
-    console.log('reorderedFields0', reorderedFields)
-
+    const reorderedFields = [...getValues('tableData')]
     // ドラッグ元の位置から要素を取り出す
     const [removed] = reorderedFields.splice(source.index, 1)
-
     // ドラッグ先の位置に要素を挿入
     reorderedFields.splice(destination.index, 0, removed)
-
-    console.log('reorderedFields1', reorderedFields)
-
     setFields(reorderedFields)
     setValue('tableData', reorderedFields)
   }
