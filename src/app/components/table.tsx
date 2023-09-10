@@ -70,8 +70,8 @@ export default function Table() {
               <tbody ref={provided.innerRef} {...provided.droppableProps}>
                 {fields.map((fieldRow, rowIndex) => (
                   <Draggable
-                    key={rowIndex}
-                    draggableId={`${rowIndex}`}
+                    key={fieldRow.id}
+                    draggableId={`${fieldRow.id}`}
                     index={rowIndex}
                   >
                     {(provided) => (
