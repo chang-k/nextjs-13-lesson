@@ -10,7 +10,7 @@ type Props = {
 }
 
 export default function Td({ accesorName, fieldRowCol }: Props) {
-  const { register, setFocus } = useFormContext<TableForm>()
+  const { register, setFocus, setValue } = useFormContext<TableForm>()
 
   const [mode, setMode] = useState<'button' | 'text' | 'edit'>(
     fieldRowCol === null ? 'button' : 'text'
@@ -20,21 +20,6 @@ export default function Td({ accesorName, fieldRowCol }: Props) {
 
   const startComposition = useCallback(() => setComposition(true), [])
   const endComposition = useCallback(() => setComposition(false), [])
-
-  useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Enter' && !composing) {
-        event.preventDefault()
-        if (colTitle !== '') {
-          setMode('text')
-        } else {
-          setMode('button')
-        }
-      }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [composing])
 
   useEffect(() => {
     if (mode === 'edit') {
@@ -72,8 +57,6 @@ export default function Td({ accesorName, fieldRowCol }: Props) {
         }}
         onBlur={(e) => {
           register(accesorName).onBlur(e)
-          setMode('text')
-          console.log('e.target.value onBlur', e.target.value)
           if (colTitle !== '') {
             setColTitle(e.target.value)
             setMode('text')
@@ -81,12 +64,18 @@ export default function Td({ accesorName, fieldRowCol }: Props) {
             setMode('button')
           }
         }}
-        // useEffectとどっちがいいか迷い中。今はぶっちゃけ雰囲気でやりたいだけ
-        // onKeyDown={(event) => {
-        //   if (event.key === 'Enter') {
-        //     event.preventDefault()
-        //   }
-        // }}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' && !composing) {
+            event.preventDefault()
+            setValue(accesorName, event.currentTarget.value)
+            if (colTitle !== '') {
+              setColTitle(event.currentTarget.value)
+              setMode('text')
+            } else {
+              setMode('button')
+            }
+          }
+        }}
         onCompositionStart={startComposition}
         onCompositionEnd={endComposition}
       />
