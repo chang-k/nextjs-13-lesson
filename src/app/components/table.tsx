@@ -28,6 +28,7 @@ export default function Table() {
     const { source, destination } = result
     if (!destination) return
     // fields配列のコピーを作成
+    // 怪奇: この時点で console.log('reorderedFields0', reorderedFields) すると、なぜか入れ替わりずみになってる、、、多分consoleの出る順番な気はしてる
     const reorderedFields = [...getValues('tableData')]
     // ドラッグ元の位置から要素を取り出す
     const [removed] = reorderedFields.splice(source.index, 1)
