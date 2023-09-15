@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { TableCell, type TableForm } from '../table/FormProvider/useTableForm'
+import { button, edit, td, text } from './td.css'
 
 type Props = {
   accesorName: `tableData.${number}.childrenArray.${number}.title`
@@ -27,58 +28,59 @@ export default function Td({ accesorName, fieldRowCol }: Props) {
     }
   }, [mode])
 
-  if (mode === 'button') {
-    return (
-      <td>
-        <button type="button" onClick={() => setMode('edit')}>
+  return (
+    <div className={td}>
+      {mode === 'button' && (
+        <button
+          type="button"
+          onClick={() => setMode('edit')}
+          className={button}
+        >
           +
         </button>
-      </td>
-    )
-  }
-  if (mode === 'text') {
-    return (
-      <td>
-        {colTitle}
-        <button onClick={() => setMode('edit')} type="button">
-          編集
-        </button>
-      </td>
-    )
-  }
-  return (
-    <td>
-      <input
-        {...register(accesorName)}
-        value={colTitle}
-        onChange={(e) => {
-          register(accesorName).onChange(e)
-          setColTitle(e.target.value)
-        }}
-        onBlur={(e) => {
-          register(accesorName).onBlur(e)
-          if (colTitle !== '') {
+      )}
+      {mode === 'text' && (
+        <>
+          <span className={text}>{colTitle}</span>
+          <button onClick={() => setMode('edit')} type="button">
+            編集
+          </button>
+        </>
+      )}
+      {mode === 'edit' && (
+        <input
+          {...register(accesorName)}
+          value={colTitle}
+          onChange={(e) => {
+            register(accesorName).onChange(e)
             setColTitle(e.target.value)
-            setMode('text')
-          } else {
-            setMode('button')
-          }
-        }}
-        onKeyDown={(event) => {
-          if (event.key === 'Enter' && !composing) {
-            event.preventDefault()
-            setValue(accesorName, event.currentTarget.value)
+          }}
+          onBlur={(e) => {
+            register(accesorName).onBlur(e)
             if (colTitle !== '') {
-              setColTitle(event.currentTarget.value)
+              setColTitle(e.target.value)
               setMode('text')
             } else {
               setMode('button')
             }
-          }
-        }}
-        onCompositionStart={startComposition}
-        onCompositionEnd={endComposition}
-      />
-    </td>
+          }}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' && !composing) {
+              event.preventDefault()
+              setValue(accesorName, event.currentTarget.value)
+              if (colTitle !== '') {
+                setColTitle(event.currentTarget.value)
+                setMode('text')
+              } else {
+                setMode('button')
+              }
+            }
+          }}
+          onCompositionStart={startComposition}
+          onCompositionEnd={endComposition}
+          className={edit}
+        />
+      )}
+    </div>
   )
 }

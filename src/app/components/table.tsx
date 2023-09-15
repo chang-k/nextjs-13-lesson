@@ -3,7 +3,16 @@
 import React, { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { type TableForm } from '../table/FormProvider/useTableForm'
-import { Tb, Tr, firstTh } from './table.css'
+import {
+  Tb,
+  tbody as tbodyCss,
+  Tr,
+  Th,
+  Td as TdCss,
+  firstTh,
+  firstTd,
+  ChildTb,
+} from './table.css'
 import Td from './td'
 import {
   DragDropContext,
@@ -44,22 +53,46 @@ export default function Table() {
         <thead>
           <tr className={Tr}>
             <th className={firstTh} />
-            <th>Header1</th>
-            <th>Header2</th>
-            <th>Header3</th>
-            <th>Header4</th>
-            <th>Header5</th>
-            <th>Header6</th>
-            <th>Header7</th>
-            <th>Header8</th>
-            <th>Header9</th>
-            <th>Header10</th>
+            <th className={Th} align="left">
+              Header1
+            </th>
+            <th className={Th} align="left">
+              Header2
+            </th>
+            <th className={Th} align="left">
+              Header3
+            </th>
+            <th className={Th} align="left">
+              Header4
+            </th>
+            <th className={Th} align="left">
+              Header5
+            </th>
+            <th className={Th} align="left">
+              Header6
+            </th>
+            <th className={Th} align="left">
+              Header7
+            </th>
+            <th className={Th} align="left">
+              Header8
+            </th>
+            <th className={Th} align="left">
+              Header9
+            </th>
+            <th className={Th} align="left">
+              Header10
+            </th>
           </tr>
         </thead>
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="table-body">
             {(provided) => (
-              <tbody ref={provided.innerRef} {...provided.droppableProps}>
+              <tbody
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className={tbodyCss}
+              >
                 {fields.map((fieldRow, rowIndex) => (
                   <Draggable
                     key={fieldRow.id}
@@ -73,16 +106,32 @@ export default function Table() {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                       >
-                        <td className={firstTh} {...provided.dragHandleProps}>
+                        <td
+                          align="center"
+                          className={firstTd}
+                          {...provided.dragHandleProps}
+                        >
                           {fieldRow.rowTitle}
                         </td>
                         {fieldRow.childrenArray?.map(
                           (fieldRowCol, colIndex) => (
-                            <Td
-                              fieldRowCol={fieldRowCol}
-                              accesorName={`tableData.${rowIndex}.childrenArray.${colIndex}.title`}
+                            <td
                               key={`tableData.${rowIndex}.childrenArray.${colIndex}.title`}
-                            />
+                              className={TdCss}
+                            >
+                              <Td
+                                fieldRowCol={fieldRowCol}
+                                accesorName={`tableData.${rowIndex}.childrenArray.${colIndex}.title`}
+                              />
+                              {fieldRowCol?.childrenArray?.map((c) => {
+                                if (c === null) return null
+                                return (
+                                  <div key={c.id} className={ChildTb}>
+                                    {c.title}
+                                  </div>
+                                )
+                              })}
+                            </td>
                           )
                         )}
                       </tr>
