@@ -14,7 +14,6 @@ import {
 } from 'react-beautiful-dnd'
 
 type Props = {
-  // childrenArray: (TableCell | null)[] | null
   accesorName: `tableData.${number}.childrenArray.${number}.childrenArray`
 }
 
@@ -59,7 +58,6 @@ export default function TdChildrenArray({ accesorName }: Props) {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      {/* <span {...provided.dragHandleProps}>Handle</span> */}
                       <Td
                         fieldRowCol={f}
                         accesorName={`${accesorName}.${colIndex}.title`}
