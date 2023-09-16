@@ -6,7 +6,9 @@ import { TableCell, type TableForm } from '../table/FormProvider/useTableForm'
 import { button, edit, td, text } from './td.css'
 
 type Props = {
-  accesorName: `tableData.${number}.childrenArray.${number}.title`
+  accesorName:
+    | `tableData.${number}.childrenArray.${number}.title`
+    | `tableData.${number}.childrenArray.${number}.childrenArray.${number}.title`
   fieldRowCol: TableCell | null
 }
 

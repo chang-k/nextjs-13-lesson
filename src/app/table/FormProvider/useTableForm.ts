@@ -27,11 +27,18 @@ const DEFAULT_VALUES: TableForm['tableData'] = [
         id: 10,
         title: 'one',
         childrenArray: [
-          { id: 1000, title: 'one' },
-          { id: 1001, title: 'one' },
+          { id: 1000, title: 'one one' },
+          { id: 1001, title: 'one one 2' },
         ],
       },
-      { id: 11, title: 'one' },
+      {
+        id: 11,
+        title: 'one',
+        childrenArray: [
+          { id: 1010, title: 'one one one' },
+          { id: 1011, title: 'one one one 2' },
+        ],
+      },
       null,
       null,
       null,
@@ -46,8 +53,22 @@ const DEFAULT_VALUES: TableForm['tableData'] = [
     id: 2,
     rowTitle: '2行目',
     childrenArray: [
-      { id: 20, title: 'one' },
-      { id: 21, title: 'one' },
+      {
+        id: 20,
+        title: 'two',
+        childrenArray: [
+          { id: 2000, title: 'two two' },
+          { id: 2001, title: 'two two 2' },
+        ],
+      },
+      {
+        id: 21,
+        title: 'two',
+        childrenArray: [
+          { id: 2010, title: 'two two two' },
+          { id: 2011, title: 'two two two 2' },
+        ],
+      },
       { id: 22, title: 'one' },
       null,
       null,

@@ -21,6 +21,7 @@ import {
   type DropResult,
   resetServerContext,
 } from 'react-beautiful-dnd'
+import TdChildrenArray from './tdChildrenArray'
 
 export default function Table() {
   resetServerContext()
@@ -123,14 +124,9 @@ export default function Table() {
                                 fieldRowCol={fieldRowCol}
                                 accesorName={`tableData.${rowIndex}.childrenArray.${colIndex}.title`}
                               />
-                              {fieldRowCol?.childrenArray?.map((c) => {
-                                if (c === null) return null
-                                return (
-                                  <div key={c.id} className={ChildTb}>
-                                    {c.title}
-                                  </div>
-                                )
-                              })}
+                              <TdChildrenArray
+                                accesorName={`tableData.${rowIndex}.childrenArray.${colIndex}.childrenArray`}
+                              />
                             </td>
                           )
                         )}

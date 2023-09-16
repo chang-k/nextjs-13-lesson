@@ -43,6 +43,5 @@ export const Tb = style({
 })
 
 export const ChildTb = style({
-  paddingLeft: 8,
   background: '#e6e6e6',
 })
