@@ -41,6 +41,7 @@ export default function TdChildrenArray({ accesorName }: Props) {
   if (!fields) return <p>None!</p>
 
   return (
+    // これを(1)に移動しないといけないかも
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId={`td-children-${accesorName}`}>
         {(provided) => (

@@ -112,12 +112,13 @@ export default function Table() {
                           className={firstTd}
                           {...provided.dragHandleProps}
                         >
-                          {fieldRow.rowTitle}
+                          ⇨ {fieldRow.rowTitle}
                         </td>
+                        {/* (1) <Droppable>をmapで回して、onDragEndをそれぞれで共有する */}
                         {fieldRow.childrenArray?.map(
                           (fieldRowCol, colIndex) => (
                             <td
-                              key={`tableData.${rowIndex}.childrenArray.${colIndex}.title`}
+                              key={`tableData.${rowIndex}.childrenArray.${colIndex}`}
                               className={TdCss}
                             >
                               <Td
