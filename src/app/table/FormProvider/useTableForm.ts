@@ -15,7 +15,12 @@ export type TableRow = {
 export type TableCell = {
   id: number
   title: string
-  childrenArray?: (TableCell | null)[]
+  childrenArray?: (TableCellChild | null)[]
+}
+
+export type TableCellChild = {
+  id: number
+  title: string
 }
 
 const DEFAULT_VALUES: TableForm['tableData'] = [

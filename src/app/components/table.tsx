@@ -22,6 +22,7 @@ import {
   resetServerContext,
 } from 'react-beautiful-dnd'
 import TdChildrenArray from './tdChildrenArray'
+import FieldRowChildrenArray from './fieldRowChildrenArray'
 
 export default function Table() {
   resetServerContext()
@@ -115,7 +116,7 @@ export default function Table() {
                           ⇨ {fieldRow.rowTitle}
                         </td>
                         {/* (1) <Droppable>をmapで回して、onDragEndをそれぞれで共有する */}
-                        {fieldRow.childrenArray?.map(
+                        {/* {fieldRow.childrenArray?.map(
                           (fieldRowCol, colIndex) => (
                             <td
                               key={`tableData.${rowIndex}.childrenArray.${colIndex}`}
@@ -130,7 +131,10 @@ export default function Table() {
                               />
                             </td>
                           )
-                        )}
+                        )} */}
+                        <FieldRowChildrenArray
+                          accesorName={`tableData.${rowIndex}.childrenArray`}
+                        />
                       </tr>
                     )}
                   </Draggable>
