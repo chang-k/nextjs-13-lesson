@@ -1,23 +1,13 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { type TableForm } from '../table/FormProvider/useTableForm'
-import {
-  Tb,
-  tbody as tbodyCss,
-  Tr,
-  Th,
-  Td as TdCss,
-  firstTh,
-  firstTd,
-  ChildTb,
-} from './table.css'
+import { Td as TdCss } from './table.css'
 import Td from './td'
 import {
   DragDropContext,
   Droppable,
-  Draggable,
   type DropResult,
   resetServerContext,
 } from 'react-beautiful-dnd'
@@ -32,7 +22,7 @@ export default function FieldRowChildrenArray({ accesorName }: Props) {
 
   const { getValues, setValue } = useFormContext<TableForm>()
 
-  const [fields, setFields] = useState(getValues(accesorName))
+  const fields = getValues(accesorName)
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result
@@ -46,26 +36,33 @@ export default function FieldRowChildrenArray({ accesorName }: Props) {
       const reorderedFields = [...fieldsValue]
       const [removed] = reorderedFields.splice(source.index, 1)
       reorderedFields.splice(destination.index, 0, removed)
-      const reorderedRowFields =
-        fields?.map((f, index) => {
-          if (index !== strNum) return f
-          if (f === null) return null
-          return {
-            ...f,
-            childrenArray: reorderedFields,
-          }
-        }) ?? []
-      setFields(reorderedRowFields)
       setValue(`${accesorName}.${strNum}.childrenArray`, reorderedFields)
       return
     }
     // 異なる階層のD&D
-    const fieldsVale = getValues(accesorName) ?? []
-    const reorderedFields = [...fieldsVale]
-    const [removed] = reorderedFields.splice(source.index, 1)
-    reorderedFields.splice(destination.index, 0, removed)
-    setFields(reorderedFields)
-    setValue(accesorName, reorderedFields)
+    if (source.droppableId !== destination.droppableId) {
+      const sourceStrs = source.droppableId.split('-')
+      const destinationStrs = destination.droppableId.split('-')
+      const sourceStrNum = Number(sourceStrs[2])
+      const destinationStrNum = Number(destinationStrs[2])
+      const sourceFieldsValue =
+        getValues(`${accesorName}.${sourceStrNum}.childrenArray`) ?? []
+      const destinationFieldsValue =
+        getValues(`${accesorName}.${destinationStrNum}.childrenArray`) ?? []
+      const reorderedSourceFields = [...sourceFieldsValue]
+      const reorderedDestinationFields = [...destinationFieldsValue]
+      const [removed] = reorderedSourceFields.splice(source.index, 1)
+      reorderedDestinationFields.splice(destination.index, 0, removed)
+      setValue(
+        `${accesorName}.${sourceStrNum}.childrenArray`,
+        reorderedSourceFields
+      )
+      setValue(
+        `${accesorName}.${destinationStrNum}.childrenArray`,
+        reorderedDestinationFields
+      )
+      return
+    }
   }
 
   if (!fields) return <p>None</p>
@@ -80,10 +77,10 @@ export default function FieldRowChildrenArray({ accesorName }: Props) {
           {(provided) => (
             <td key={`${accesorName}.${colIndex}`} className={TdCss}>
               <div ref={provided.innerRef} {...provided.droppableProps}>
-                <Td
-                  fieldRowCol={fieldRowCol}
-                  accesorName={`${accesorName}.${colIndex}.title`}
-                />
+              <Td
+                fieldRowCol={fieldRowCol}
+                accesorName={`${accesorName}.${colIndex}.title`}
+              />
                 <TdChildrenArray
                   accesorName={`${accesorName}.${colIndex}.childrenArray`}
                 />
