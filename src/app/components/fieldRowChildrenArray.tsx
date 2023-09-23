@@ -3,7 +3,7 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { type TableForm } from '../table/FormProvider/useTableForm'
-import { Td as TdCss } from './table.css'
+import { Td as TdCss, ChildTbWrapper } from './table.css'
 import Td from './td'
 import {
   DragDropContext,
@@ -80,7 +80,11 @@ export default function FieldRowChildrenArray({ accesorName }: Props) {
                 fieldRowCol={fieldRowCol}
                 accesorName={`${accesorName}.${colIndex}.title`}
               />
-              <div ref={provided.innerRef} {...provided.droppableProps}>
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className={ChildTbWrapper}
+              >
                 <TdChildrenArray
                   accesorName={`${accesorName}.${colIndex}.childrenArray`}
                 />

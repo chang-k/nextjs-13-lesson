@@ -42,6 +42,10 @@ export const Tb = style({
   display: 'block',
 })
 
+export const ChildTbWrapper = style({
+  minHeight: 100,
+})
+
 export const ChildTb = style({
   background: '#e6e6e6',
 })
