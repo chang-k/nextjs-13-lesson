@@ -3,17 +3,7 @@
 import React, { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { type TableForm } from '../table/FormProvider/useTableForm'
-import {
-  Tb,
-  tbody as tbodyCss,
-  Tr,
-  Th,
-  Td as TdCss,
-  firstTh,
-  firstTd,
-  ChildTb,
-} from './table.css'
-import Td from './td'
+import { Tb, tbody as tbodyCss, Tr, Th, firstTh, firstTd } from './table.css'
 import {
   DragDropContext,
   Droppable,
@@ -21,7 +11,6 @@ import {
   type DropResult,
   resetServerContext,
 } from 'react-beautiful-dnd'
-import TdChildrenArray from './tdChildrenArray'
 import FieldRowChildrenArray from './fieldRowChildrenArray'
 
 export default function Table() {
