@@ -115,23 +115,6 @@ export default function Table() {
                         >
                           ⇨ {fieldRow.rowTitle}
                         </td>
-                        {/* (1) <Droppable>をmapで回して、onDragEndをそれぞれで共有する */}
-                        {/* {fieldRow.childrenArray?.map(
-                          (fieldRowCol, colIndex) => (
-                            <td
-                              key={`tableData.${rowIndex}.childrenArray.${colIndex}`}
-                              className={TdCss}
-                            >
-                              <Td
-                                fieldRowCol={fieldRowCol}
-                                accesorName={`tableData.${rowIndex}.childrenArray.${colIndex}.title`}
-                              />
-                              <TdChildrenArray
-                                accesorName={`tableData.${rowIndex}.childrenArray.${colIndex}.childrenArray`}
-                              />
-                            </td>
-                          )
-                        )} */}
                         <FieldRowChildrenArray
                           accesorName={`tableData.${rowIndex}.childrenArray`}
                         />

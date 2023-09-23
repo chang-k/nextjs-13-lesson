@@ -76,15 +76,16 @@ export default function FieldRowChildrenArray({ accesorName }: Props) {
         >
           {(provided) => (
             <td key={`${accesorName}.${colIndex}`} className={TdCss}>
-              <div ref={provided.innerRef} {...provided.droppableProps}>
               <Td
                 fieldRowCol={fieldRowCol}
                 accesorName={`${accesorName}.${colIndex}.title`}
               />
+              <div ref={provided.innerRef} {...provided.droppableProps}>
                 <TdChildrenArray
                   accesorName={`${accesorName}.${colIndex}.childrenArray`}
                 />
               </div>
+              {provided.placeholder}
             </td>
           )}
         </Droppable>

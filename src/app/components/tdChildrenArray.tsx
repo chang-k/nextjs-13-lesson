@@ -16,8 +16,6 @@ export default function TdChildrenArray({ accesorName }: Props) {
 
   const fields = getValues(accesorName)
 
-  console.log(accesorName, fields, 'TdChildrenArray')
-
   if (!fields) return <p>None!</p>
 
   return (

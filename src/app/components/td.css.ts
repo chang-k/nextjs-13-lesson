@@ -13,6 +13,7 @@ export const text = style({
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
+  fontSize: 12,
 })
 
 export const edit = style({
