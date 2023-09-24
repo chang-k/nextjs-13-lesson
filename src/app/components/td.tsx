@@ -1,24 +1,30 @@
 'use client'
 
 import React, { useCallback, useEffect, useState } from 'react'
-import { useFormContext } from 'react-hook-form'
+import { useFormContext, useWatch } from 'react-hook-form'
 import { TableCell, type TableForm } from '../table/FormProvider/useTableForm'
 import { button, edit, td, text } from './td.css'
 
 type Props = {
   accesorName:
-    | `tableData.${number}.childrenArray.${number}.title`
-    | `tableData.${number}.childrenArray.${number}.childrenArray.${number}.title`
+    | `tableData.${number}.childrenArray.${number}`
+    | `tableData.${number}.childrenArray.${number}.childrenArray.${number}`
   fieldRowCol: TableCell | null
+  isLastChild?: boolean
 }
 
-export default function Td({ accesorName, fieldRowCol }: Props) {
+export default function Td({
+  accesorName,
+  fieldRowCol,
+  isLastChild = false,
+}: Props) {
   const { register, setFocus, setValue } = useFormContext<TableForm>()
 
   const [mode, setMode] = useState<'button' | 'text' | 'edit'>(
     fieldRowCol === null ? 'button' : 'text'
   )
   const [colTitle, setColTitle] = useState(fieldRowCol?.title ?? '')
+  const [colValue, setColValue] = useState(fieldRowCol?.value ?? '')
   const [composing, setComposition] = useState(false)
 
   const startComposition = useCallback(() => setComposition(true), [])
@@ -26,12 +32,26 @@ export default function Td({ accesorName, fieldRowCol }: Props) {
 
   useEffect(() => {
     if (mode === 'edit') {
-      setFocus(accesorName)
+      setFocus(`${accesorName}.title`)
     }
   }, [mode])
 
   return (
     <div className={td}>
+      {/* ここをコンポーネント分割して、子の方でuseWatchする */}
+      {isLastChild ? (
+        <input
+          {...register(`${accesorName}.value`)}
+          value={colValue}
+          className={edit}
+        />
+      ) : (
+        <input
+          {...register(`${accesorName}.value`)}
+          value={colValue}
+          className={edit}
+        />
+      )}
       {mode === 'button' && (
         <button
           type="button"
@@ -51,14 +71,14 @@ export default function Td({ accesorName, fieldRowCol }: Props) {
       )}
       {mode === 'edit' && (
         <input
-          {...register(accesorName)}
+          {...register(`${accesorName}.title`)}
           value={colTitle}
           onChange={(e) => {
-            register(accesorName).onChange(e)
+            register(`${accesorName}.title`).onChange(e)
             setColTitle(e.target.value)
           }}
           onBlur={(e) => {
-            register(accesorName).onBlur(e)
+            register(`${accesorName}.title`).onBlur(e)
             if (colTitle !== '') {
               setColTitle(e.target.value)
               setMode('text')
@@ -69,7 +89,7 @@ export default function Td({ accesorName, fieldRowCol }: Props) {
           onKeyDown={(event) => {
             if (event.key === 'Enter' && !composing) {
               event.preventDefault()
-              setValue(accesorName, event.currentTarget.value)
+              setValue(`${accesorName}.title`, event.currentTarget.value)
               if (colTitle !== '') {
                 setColTitle(event.currentTarget.value)
                 setMode('text')

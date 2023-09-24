@@ -35,7 +35,8 @@ export default function TdChildrenArray({ accesorName }: Props) {
               >
                 <Td
                   fieldRowCol={f}
-                  accesorName={`${accesorName}.${colIndex}.title`}
+                  accesorName={`${accesorName}.${colIndex}`}
+                  isLastChild
                 />
               </div>
             )}

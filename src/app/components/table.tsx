@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { type TableForm } from '../table/FormProvider/useTableForm'
-import { Tb, tbody as tbodyCss, Tr, Th, firstTh, firstTd } from './table.css'
+import { Tb, tbody as tbodyCss, Tr, firstTd } from './table.css'
+import Th from './th'
 import {
   DragDropContext,
   Droppable,
@@ -38,42 +39,20 @@ export default function Table() {
     setValue('tableData', reorderedFields)
   }
 
+  // Headerをmapするためにとりあえずサボって作る
+  const array = useMemo(
+    () => [null, null, null, null, null, null, null, null, null, null, null],
+    []
+  )
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <table className={Tb}>
         <thead>
           <tr className={Tr}>
-            <th className={firstTh} />
-            <th className={Th} align="left">
-              Header1
-            </th>
-            <th className={Th} align="left">
-              Header2
-            </th>
-            <th className={Th} align="left">
-              Header3
-            </th>
-            <th className={Th} align="left">
-              Header4
-            </th>
-            <th className={Th} align="left">
-              Header5
-            </th>
-            <th className={Th} align="left">
-              Header6
-            </th>
-            <th className={Th} align="left">
-              Header7
-            </th>
-            <th className={Th} align="left">
-              Header8
-            </th>
-            <th className={Th} align="left">
-              Header9
-            </th>
-            <th className={Th} align="left">
-              Header10
-            </th>
+            {array.map((_, index) => {
+              return <Th hIndex={index} key={`th-${index}`} />
+            })}
           </tr>
         </thead>
         <DragDropContext onDragEnd={onDragEnd}>

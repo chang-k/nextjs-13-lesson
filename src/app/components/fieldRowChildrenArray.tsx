@@ -78,7 +78,7 @@ export default function FieldRowChildrenArray({ accesorName }: Props) {
             <td key={`${accesorName}.${colIndex}`} className={TdCss}>
               <Td
                 fieldRowCol={fieldRowCol}
-                accesorName={`${accesorName}.${colIndex}.title`}
+                accesorName={`${accesorName}.${colIndex}`}
               />
               <div
                 ref={provided.innerRef}
