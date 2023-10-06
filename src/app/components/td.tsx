@@ -1,9 +1,14 @@
 'use client'
 
 import React, { useCallback, useEffect, useState } from 'react'
-import { useFormContext, useWatch } from 'react-hook-form'
-import { TableCell, type TableForm } from '../table/FormProvider/useTableForm'
+import { useFormContext } from 'react-hook-form'
+import {
+  type TableCell,
+  type TableForm,
+} from '../table/FormProvider/useTableForm'
 import { button, edit, td, text } from './td.css'
+import LastChildNumberInput from './lastChildNumberInput'
+import ParentNumberInput from './parentNumberInput'
 
 type Props = {
   accesorName:
@@ -24,7 +29,6 @@ export default function Td({
     fieldRowCol === null ? 'button' : 'text'
   )
   const [colTitle, setColTitle] = useState(fieldRowCol?.title ?? '')
-  const [colValue, setColValue] = useState(fieldRowCol?.value ?? '')
   const [composing, setComposition] = useState(false)
 
   const startComposition = useCallback(() => setComposition(true), [])
@@ -38,18 +42,17 @@ export default function Td({
 
   return (
     <div className={td}>
-      {/* ここをコンポーネント分割して、子の方でuseWatchする */}
       {isLastChild ? (
-        <input
-          {...register(`${accesorName}.value`)}
-          value={colValue}
-          className={edit}
+        <LastChildNumberInput
+          accesorName={
+            accesorName as `tableData.${number}.childrenArray.${number}.childrenArray.${number}`
+          }
         />
       ) : (
-        <input
-          {...register(`${accesorName}.value`)}
-          value={colValue}
-          className={edit}
+        <ParentNumberInput
+          accesorName={
+            accesorName as `tableData.${number}.childrenArray.${number}`
+          }
         />
       )}
       {mode === 'button' && (
