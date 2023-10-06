@@ -15,7 +15,7 @@ export type TableRow = {
 export type TableCell = {
   id: number
   title: string
-  // MEMO: サーバから返ってくるかどうかは今は考慮していないが、サーバ的には要らなそう。フロントの都合的には必要
+  // MEMO: サーバから返ってくるかどうかは今は考慮していないが、サーバ的には要らなそう。フロントの都合的には必要、と思ったけどフロントでもいらんかも
   value: string
   childrenArray?: (TableCellChild | null)[]
 }
