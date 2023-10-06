@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { useFormContext } from 'react-hook-form'
+import { useFormContext, useWatch } from 'react-hook-form'
 import { type TableForm } from '../table/FormProvider/useTableForm'
 import { ChildTb } from './table.css'
 import Td from './td'
@@ -12,9 +12,9 @@ type Props = {
 }
 
 export default function TdChildrenArray({ accesorName }: Props) {
-  const { getValues } = useFormContext<TableForm>()
+  const { control } = useFormContext<TableForm>()
 
-  const fields = getValues(accesorName)
+  const fields = useWatch({ control, name: accesorName })
 
   if (!fields) return <p>None!</p>
 

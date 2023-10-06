@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useCallback, useEffect, useState } from 'react'
-import { useFormContext } from 'react-hook-form'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 import {
   type TableCell,
   type TableForm,
@@ -23,10 +23,16 @@ export default function Td({
   fieldRowCol,
   isLastChild = false,
 }: Props) {
-  const { register, setFocus, setValue } = useFormContext<TableForm>()
+  const { register, setFocus, setValue, getValues, control } =
+    useFormContext<TableForm>()
+
+  const { append } = useFieldArray({
+    name: `${accesorName}.childrenArray` as `tableData.${number}.childrenArray.${number}.childrenArray`,
+    control,
+  })
 
   const [mode, setMode] = useState<'button' | 'text' | 'edit'>(
-    fieldRowCol === null ? 'button' : 'text'
+    fieldRowCol === null ? 'button' : fieldRowCol.id == null ? 'edit' : 'text'
   )
   const [colTitle, setColTitle] = useState(fieldRowCol?.title ?? '')
   const [composing, setComposition] = useState(false)
@@ -105,6 +111,14 @@ export default function Td({
           onCompositionEnd={endComposition}
           className={edit}
         />
+      )}
+      {!isLastChild && (
+        <button
+          onClick={() => append({ title: 'new!', value: '0' })}
+          type="button"
+        >
+          子要素追加
+        </button>
       )}
     </div>
   )
