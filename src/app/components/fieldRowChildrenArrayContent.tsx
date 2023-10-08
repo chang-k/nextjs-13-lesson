@@ -30,6 +30,7 @@ export default function FieldRowChildrenArrayContent({
     keyName: 'fieldRowChildrenArrayContentKey',
   })
 
+  // 急募: 追加した時に追加した分だけレンダリングさせたい
   const handleClickAddColArray = useCallback((obj: any): void => {
     append(obj)
   }, [])
