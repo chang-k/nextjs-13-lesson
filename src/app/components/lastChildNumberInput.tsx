@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { type TableForm } from '../table/FormProvider/useTableForm'
 import { edit } from './td.css'
@@ -9,7 +9,7 @@ type Props = {
   accesorName: `tableData.${number}.childrenArray.${number}.childrenArray.${number}`
 }
 
-export default function LastChildNumberInput({ accesorName }: Props) {
+function LastChildNumberInput({ accesorName }: Props) {
   const { register, getValues, setValue } = useFormContext<TableForm>()
 
   // Question: PropsでfieldRowColを持ってくると、無駄なレンダリングが走る？
@@ -39,3 +39,5 @@ export default function LastChildNumberInput({ accesorName }: Props) {
     />
   )
 }
+
+export default memo(LastChildNumberInput)

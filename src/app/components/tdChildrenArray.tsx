@@ -14,6 +14,7 @@ type Props = {
 export default function TdChildrenArray({ accesorName }: Props) {
   const { control } = useFormContext<TableForm>()
 
+  // 追加した分だけレンダリングした方がいい？その場合useWatchは使えなそう
   const fields = useWatch({ control, name: accesorName })
 
   if (!fields) return <p>None!</p>
@@ -24,7 +25,11 @@ export default function TdChildrenArray({ accesorName }: Props) {
         // MEMO: 子の子は現在使われない
         if (f === null) return null
         return (
-          <Draggable key={f.id} draggableId={`${f.id}`} index={colIndex}>
+          <Draggable
+            key={`${f.id ?? 0}-${colIndex}`}
+            draggableId={`${f.id ?? 0}-${colIndex}`}
+            index={colIndex}
+          >
             {(provided) => (
               <div
                 key={`${accesorName}.${colIndex}.title`}
