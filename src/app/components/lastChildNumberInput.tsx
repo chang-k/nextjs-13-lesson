@@ -9,7 +9,7 @@ type Props = {
   accesorName: `tableData.${number}.childrenArray.${number}.childrenArray.${number}`
 }
 
-function LastChildNumberInput({ accesorName }: Props) {
+export default function LastChildNumberInput({ accesorName }: Props) {
   const { register, getValues, setValue } = useFormContext<TableForm>()
 
   // Question: PropsでfieldRowColを持ってくると、無駄なレンダリングが走る？
@@ -39,5 +39,3 @@ function LastChildNumberInput({ accesorName }: Props) {
     />
   )
 }
-
-export default memo(LastChildNumberInput)

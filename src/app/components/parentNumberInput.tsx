@@ -8,7 +8,7 @@ type Props = {
   accesorName: `tableData.${number}.childrenArray.${number}`
 }
 
-function ParentNumberInput({ accesorName }: Props) {
+export default function ParentNumberInput({ accesorName }: Props) {
   const { control } = useFormContext<TableForm>()
 
   const defaultColValue = useWatch({ control, name: accesorName })
@@ -21,5 +21,3 @@ function ParentNumberInput({ accesorName }: Props) {
 
   return <p>計 {total ? total.toLocaleString() : '(数値無し)'}</p>
 }
-
-export default memo(ParentNumberInput)
