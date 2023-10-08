@@ -112,7 +112,12 @@ export default function Td({
       {!isLastChild && (
         <button
           onClick={() =>
-            handleClickAddColArray?.({ title: 'new!', value: '0' })
+            handleClickAddColArray?.({
+              // idが一意でないとD&D出来ないため暫定対応
+              id: Date.now().toString(),
+              title: 'new!',
+              value: '0',
+            })
           }
           type="button"
         >
