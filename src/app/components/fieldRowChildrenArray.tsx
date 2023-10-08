@@ -3,15 +3,13 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { type TableForm } from '../table/FormProvider/useTableForm'
-import { Td as TdCss, ChildTbWrapper } from './table.css'
-import Td from './td'
 import {
   DragDropContext,
   Droppable,
   type DropResult,
   resetServerContext,
 } from 'react-beautiful-dnd'
-import TdChildrenArray from './tdChildrenArray'
+import FieldRowChildrenArrayContent from './fieldRowChildrenArrayContent'
 
 type Props = {
   accesorName: `tableData.${number}.childrenArray`
@@ -75,22 +73,11 @@ export default function FieldRowChildrenArray({ accesorName }: Props) {
           key={`td-children-${colIndex}`}
         >
           {(provided) => (
-            <td key={`${accesorName}.${colIndex}`} className={TdCss}>
-              <Td
-                fieldRowCol={fieldRowCol}
-                accesorName={`${accesorName}.${colIndex}`}
-              />
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className={ChildTbWrapper}
-              >
-                <TdChildrenArray
-                  accesorName={`${accesorName}.${colIndex}.childrenArray`}
-                />
-              </div>
-              {provided.placeholder}
-            </td>
+            <FieldRowChildrenArrayContent
+              fieldRowCol={fieldRowCol}
+              accesorName={`${accesorName}.${colIndex}`}
+              provided={provided}
+            />
           )}
         </Droppable>
       ))}

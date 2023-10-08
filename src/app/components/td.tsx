@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useCallback, useEffect, useState } from 'react'
-import { useFieldArray, useFormContext } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 import {
   type TableCell,
   type TableForm,
@@ -16,22 +16,19 @@ type Props = {
     | `tableData.${number}.childrenArray.${number}.childrenArray.${number}`
   fieldRowCol: TableCell | null
   isLastChild?: boolean
+  handleClickAddColArray?: (obj: any) => void
 }
 
 export default function Td({
   accesorName,
   fieldRowCol,
   isLastChild = false,
+  handleClickAddColArray,
 }: Props) {
-  const { register, setFocus, setValue, getValues, control } =
-    useFormContext<TableForm>()
-
-  const { append } = useFieldArray({
-    name: `${accesorName}.childrenArray` as `tableData.${number}.childrenArray.${number}.childrenArray`,
-    control,
-  })
+  const { register, setFocus, setValue } = useFormContext<TableForm>()
 
   const [mode, setMode] = useState<'button' | 'text' | 'edit'>(
+    // idが無い場合D&Dが終わった後問答無用でedit状態になる。これはAtomでやった方がいいかも
     fieldRowCol === null ? 'button' : fieldRowCol.id == null ? 'edit' : 'text'
   )
   const [colTitle, setColTitle] = useState(fieldRowCol?.title ?? '')
@@ -114,7 +111,9 @@ export default function Td({
       )}
       {!isLastChild && (
         <button
-          onClick={() => append({ title: 'new!', value: '0' })}
+          onClick={() =>
+            handleClickAddColArray?.({ title: 'new!', value: '0' })
+          }
           type="button"
         >
           子要素追加

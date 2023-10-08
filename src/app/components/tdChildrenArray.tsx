@@ -1,23 +1,18 @@
 'use client'
 
 import React from 'react'
-import { useFormContext, useWatch } from 'react-hook-form'
-import { type TableForm } from '../table/FormProvider/useTableForm'
+import { type TableCellChild } from '../table/FormProvider/useTableForm'
 import { ChildTb } from './table.css'
 import Td from './td'
 import { Draggable } from 'react-beautiful-dnd'
 
 type Props = {
   accesorName: `tableData.${number}.childrenArray.${number}.childrenArray`
+  fields: (TableCellChild | null)[]
 }
 
-export default function TdChildrenArray({ accesorName }: Props) {
-  const { control } = useFormContext<TableForm>()
-
-  // 追加した分だけレンダリングした方がいい？その場合useWatchは使えなそう
-  const fields = useWatch({ control, name: accesorName })
-
-  if (!fields) return <p>None!</p>
+export default function TdChildrenArray({ accesorName, fields }: Props) {
+  if (fields.length === 0) return <p>None!</p>
 
   return (
     <>
