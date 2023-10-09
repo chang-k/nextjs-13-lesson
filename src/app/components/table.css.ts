@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css'
+import { recipe } from '@vanilla-extract/recipes'
 
 export const firstTd = style({
   position: 'sticky',
@@ -15,8 +16,22 @@ export const tbody = style({
   height: 'calc(100vh - 250px)',
 })
 
-export const Tr = style({
+export const HeaderTr = style({
   display: 'flex',
+})
+
+export const Tr = recipe({
+  base: HeaderTr,
+  variants: {
+    isHighlight: {
+      true: {
+        background: '#f2f2f2',
+      },
+      false: {
+        background: '#fff',
+      },
+    },
+  },
 })
 
 export const Td = style({

@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { memo } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { type TableForm } from '../table/FormProvider/useTableForm'
 import {
@@ -15,7 +15,7 @@ type Props = {
   accesorName: `tableData.${number}.childrenArray`
 }
 
-export default function FieldRowChildrenArray({ accesorName }: Props) {
+function FieldRowChildrenArray({ accesorName }: Props) {
   resetServerContext()
 
   const { getValues, setValue } = useFormContext<TableForm>()
@@ -84,3 +84,5 @@ export default function FieldRowChildrenArray({ accesorName }: Props) {
     </DragDropContext>
   )
 }
+
+export default memo(FieldRowChildrenArray)
