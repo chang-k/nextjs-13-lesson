@@ -15,6 +15,7 @@ import {
 } from 'react-beautiful-dnd'
 import FieldRowChildrenArray from './fieldRowChildrenArray'
 import { highlightCellValue } from './hooks/useHighlightCell'
+import TrWrapper from './trWrapper'
 
 type Props = {
   rowIndex: number
@@ -23,23 +24,16 @@ type Props = {
 }
 
 export default function Tr({ rowIndex, provided, rowTitle }: Props) {
-  const cellValue = highlightCellValue()
-
   return (
-    <tr
-      className={TrCss({
-        isHighlight: cellValue.row === rowIndex,
-      })}
-      key={rowIndex}
-      ref={provided.innerRef}
-      {...provided.draggableProps}
-    >
-      <td align="center" className={firstTd} {...provided.dragHandleProps}>
-        ⇨ {rowTitle}
-      </td>
-      <FieldRowChildrenArray
-        accesorName={`tableData.${rowIndex}.childrenArray`}
-      />
-    </tr>
+    <TrWrapper rowIndex={rowIndex} provided={provided}>
+      <>
+        <td align="center" className={firstTd} {...provided.dragHandleProps}>
+          ⇨ {rowTitle}
+        </td>
+        <FieldRowChildrenArray
+          accesorName={`tableData.${rowIndex}.childrenArray`}
+        />
+      </>
+    </TrWrapper>
   )
 }
