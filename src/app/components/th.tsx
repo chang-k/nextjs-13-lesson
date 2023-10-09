@@ -7,6 +7,7 @@ import {
   type TableCellChild,
   type TableForm,
 } from '../table/FormProvider/useTableForm'
+import { highlightCellValue } from './hooks/useHighlightCell'
 
 type Props = {
   hIndex: number // 0-10
@@ -14,6 +15,8 @@ type Props = {
 
 export default function Th({ hIndex }: Props) {
   const { control } = useFormContext<TableForm>()
+
+  const cellValue = highlightCellValue()
 
   // mapサボる
   const columnAll: (TableCellChild | undefined)[][] = useWatch({
@@ -53,7 +56,10 @@ export default function Th({ hIndex }: Props) {
     return <th className={firstTh} />
   }
   return (
-    <th className={ThCss} align="left">
+    <th
+      className={ThCss({ isHighlight: cellValue.col === hIndex - 1 })}
+      align="left"
+    >
       <div>
         <p>Header {hIndex}</p>
         <p>合計: {!isNaN(total) ? total.toLocaleString() : '-'}</p>
