@@ -3,7 +3,6 @@
 import React from 'react'
 import { Tr as TrCss } from './table.css'
 import { type DraggableProvided } from 'react-beautiful-dnd'
-import { highlightCellValue } from './hooks/useHighlightCell'
 
 type Props = {
   rowIndex: number
@@ -12,13 +11,9 @@ type Props = {
 }
 
 export default function TrWrapper({ rowIndex, provided, children }: Props) {
-  const cellValue = highlightCellValue()
-
   return (
     <tr
-      className={TrCss({
-        isHighlight: cellValue.row === rowIndex,
-      })}
+      className={TrCss}
       key={rowIndex}
       ref={provided.innerRef}
       {...provided.draggableProps}

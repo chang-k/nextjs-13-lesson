@@ -16,20 +16,11 @@ export const tbody = style({
   height: 'calc(100vh - 250px)',
 })
 
-export const HeaderTr = style({
+export const Tr = style({
   display: 'flex',
-})
-
-export const Tr = recipe({
-  base: HeaderTr,
-  variants: {
-    isHighlight: {
-      true: {
-        background: '#f2f2f2',
-      },
-      false: {
-        background: '#fff',
-      },
+  selectors: {
+    '&:hover': {
+      background: '#f2f2f2',
     },
   },
 })

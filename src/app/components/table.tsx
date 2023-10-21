@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { type TableForm } from '../table/FormProvider/useTableForm'
-import { Tb, tbody as tbodyCss, HeaderTr } from './table.css'
+import { Tb, tbody as tbodyCss, Tr as TrCss } from './table.css'
 import Th from './th'
 import {
   DragDropContext,
@@ -49,7 +49,7 @@ export default function Table() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <table className={Tb}>
         <thead>
-          <tr className={HeaderTr}>
+          <tr className={TrCss}>
             {array.map((_, index) => {
               return <Th hIndex={index} key={`th-${index}`} />
             })}
