@@ -16,6 +16,9 @@ type Props = {
     | `tableData.${number}.childrenArray.${number}.childrenArray.${number}`
   fieldRowCol: TableCell | null
   isLastChild?: boolean
+  isChildOpen?: boolean
+  hasChild?: boolean
+  handleToggleChildOpen?: () => void
   handleClickAddColArray?: (obj: any) => void
 }
 
@@ -23,6 +26,9 @@ export default function Td({
   accesorName,
   fieldRowCol,
   isLastChild = false,
+  isChildOpen,
+  hasChild,
+  handleToggleChildOpen,
   handleClickAddColArray,
 }: Props) {
   const { register, setFocus, setValue } = useFormContext<TableForm>()
@@ -110,14 +116,26 @@ export default function Td({
         />
       )}
       {!isLastChild && (
-        <button
-          onClick={() =>
-            handleClickAddColArray?.({ title: 'new!', value: '0' })
-          }
-          type="button"
-        >
-          子要素追加
-        </button>
+        <>
+          <button
+            onClick={() =>
+              handleClickAddColArray?.({
+                // idが一意でないとD&D出来ないため暫定対応
+                id: Date.now().toString(),
+                title: 'new!',
+                value: '0',
+              })
+            }
+            type="button"
+          >
+            子要素追加
+          </button>
+          {hasChild && (
+            <button onClick={() => handleToggleChildOpen?.()} type="button">
+              子要素{isChildOpen ? 'OPEN' : 'CLOSE'}
+            </button>
+          )}
+        </>
       )}
     </div>
   )

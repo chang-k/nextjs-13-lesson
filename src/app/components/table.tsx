@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { type TableForm } from '../table/FormProvider/useTableForm'
-import { Tb, tbody as tbodyCss, Tr, firstTd } from './table.css'
+import { Tb, tbody as tbodyCss, Tr as TrCss } from './table.css'
 import Th from './th'
 import {
   DragDropContext,
@@ -12,7 +12,7 @@ import {
   type DropResult,
   resetServerContext,
 } from 'react-beautiful-dnd'
-import FieldRowChildrenArray from './fieldRowChildrenArray'
+import Tr from './tr'
 
 export default function Table() {
   resetServerContext()
@@ -49,7 +49,7 @@ export default function Table() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <table className={Tb}>
         <thead>
-          <tr className={Tr}>
+          <tr className={TrCss}>
             {array.map((_, index) => {
               return <Th hIndex={index} key={`th-${index}`} />
             })}
@@ -70,23 +70,11 @@ export default function Table() {
                     index={rowIndex}
                   >
                     {(provided) => (
-                      <tr
-                        className={Tr}
-                        key={rowIndex}
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                      >
-                        <td
-                          align="center"
-                          className={firstTd}
-                          {...provided.dragHandleProps}
-                        >
-                          ⇨ {fieldRow.rowTitle}
-                        </td>
-                        <FieldRowChildrenArray
-                          accesorName={`tableData.${rowIndex}.childrenArray`}
-                        />
-                      </tr>
+                      <Tr
+                        rowIndex={rowIndex}
+                        provided={provided}
+                        rowTitle={fieldRow.rowTitle}
+                      />
                     )}
                   </Draggable>
                 ))}

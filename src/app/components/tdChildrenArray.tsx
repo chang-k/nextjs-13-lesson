@@ -20,11 +20,7 @@ export default function TdChildrenArray({ accesorName, fields }: Props) {
         // MEMO: 子の子は現在使われない
         if (f === null) return null
         return (
-          <Draggable
-            key={`${f.id ?? 0}-${colIndex}`}
-            draggableId={`${f.id ?? 0}-${colIndex}`}
-            index={colIndex}
-          >
+          <Draggable key={`${f.id}`} draggableId={`${f.id}`} index={colIndex}>
             {(provided) => (
               <div
                 key={`${accesorName}.${colIndex}.title`}

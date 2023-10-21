@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css'
+import { recipe } from '@vanilla-extract/recipes'
 
 export const firstTd = style({
   position: 'sticky',
@@ -17,6 +18,11 @@ export const tbody = style({
 
 export const Tr = style({
   display: 'flex',
+  selectors: {
+    '&:hover': {
+      background: '#f2f2f2',
+    },
+  },
 })
 
 export const Td = style({

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import {
   type TableCell,
@@ -10,6 +10,7 @@ import { Td as TdCss, ChildTbWrapper } from './table.css'
 import Td from './td'
 import { type DroppableProvided } from 'react-beautiful-dnd'
 import TdChildrenArray from './tdChildrenArray'
+import { setHighlightCell } from './hooks/useHighlightCell'
 
 type Props = {
   fieldRowCol: TableCell | null
@@ -22,7 +23,11 @@ export default function FieldRowChildrenArrayContent({
   accesorName,
   provided,
 }: Props) {
+  const [isChildOpen, setIsChildOpen] = useState(true)
+
   const { control } = useFormContext<TableForm>()
+
+  const setHighlight = setHighlightCell()
 
   const { fields, append } = useFieldArray({
     control,
@@ -35,23 +40,42 @@ export default function FieldRowChildrenArrayContent({
     append(obj)
   }, [])
 
+  const handleToggleChildOpen = useCallback((): void => {
+    setIsChildOpen((prev) => !prev)
+  }, [setIsChildOpen])
+
   return (
-    <td key={accesorName} className={TdCss}>
+    <td
+      key={accesorName}
+      className={TdCss}
+      onMouseEnter={() => {
+        const accesorNameArray = accesorName.split('.')
+        setHighlight({
+          row: Number(accesorNameArray[1]),
+          col: Number(accesorNameArray[3]),
+        })
+      }}
+    >
       <Td
         fieldRowCol={fieldRowCol}
         accesorName={accesorName}
+        isChildOpen={isChildOpen}
+        hasChild={fields.length !== 0}
+        handleToggleChildOpen={handleToggleChildOpen}
         handleClickAddColArray={handleClickAddColArray}
       />
-      <div
-        ref={provided.innerRef}
-        {...provided.droppableProps}
-        className={ChildTbWrapper}
-      >
-        <TdChildrenArray
-          accesorName={`${accesorName}.childrenArray`}
-          fields={fields}
-        />
-      </div>
+      {isChildOpen && (
+        <div
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          className={ChildTbWrapper}
+        >
+          <TdChildrenArray
+            accesorName={`${accesorName}.childrenArray`}
+            fields={fields}
+          />
+        </div>
+      )}
       {provided.placeholder}
     </td>
   )
