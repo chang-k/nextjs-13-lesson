@@ -64,18 +64,18 @@ export default function FieldRowChildrenArrayContent({
         handleToggleChildOpen={handleToggleChildOpen}
         handleClickAddColArray={handleClickAddColArray}
       />
-      {isChildOpen && (
-        <div
-          ref={provided.innerRef}
-          {...provided.droppableProps}
-          className={ChildTbWrapper}
-        >
+      <div
+        ref={provided.innerRef}
+        {...provided.droppableProps}
+        className={ChildTbWrapper}
+      >
+        {isChildOpen && (
           <TdChildrenArray
             accesorName={`${accesorName}.childrenArray`}
             fields={fields}
           />
-        </div>
-      )}
+        )}
+      </div>
       {provided.placeholder}
     </td>
   )
