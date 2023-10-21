@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import {
   type TableCell,
@@ -23,6 +23,8 @@ export default function FieldRowChildrenArrayContent({
   accesorName,
   provided,
 }: Props) {
+  const [isChildOpen, setIsChildOpen] = useState(true)
+
   const { control } = useFormContext<TableForm>()
 
   const setHighlight = setHighlightCell()
@@ -37,6 +39,10 @@ export default function FieldRowChildrenArrayContent({
   const handleClickAddColArray = useCallback((obj: any): void => {
     append(obj)
   }, [])
+
+  const handleToggleChildOpen = useCallback((): void => {
+    setIsChildOpen((prev) => !prev)
+  }, [setIsChildOpen])
 
   return (
     <td
@@ -53,18 +59,23 @@ export default function FieldRowChildrenArrayContent({
       <Td
         fieldRowCol={fieldRowCol}
         accesorName={accesorName}
+        isChildOpen={isChildOpen}
+        hasChild={fields.length !== 0}
+        handleToggleChildOpen={handleToggleChildOpen}
         handleClickAddColArray={handleClickAddColArray}
       />
-      <div
-        ref={provided.innerRef}
-        {...provided.droppableProps}
-        className={ChildTbWrapper}
-      >
-        <TdChildrenArray
-          accesorName={`${accesorName}.childrenArray`}
-          fields={fields}
-        />
-      </div>
+      {isChildOpen && (
+        <div
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          className={ChildTbWrapper}
+        >
+          <TdChildrenArray
+            accesorName={`${accesorName}.childrenArray`}
+            fields={fields}
+          />
+        </div>
+      )}
       {provided.placeholder}
     </td>
   )
