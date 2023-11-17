@@ -11,6 +11,7 @@ import Td from './td'
 import { type DroppableProvided } from 'react-beautiful-dnd'
 import TdChildrenArray from './tdChildrenArray'
 import { setHighlightCell } from './hooks/useHighlightCell'
+import { useOpenFlagIds } from './hooks/useAllOpenFlag'
 
 type Props = {
   fieldRowCol: TableCell | null
@@ -23,7 +24,12 @@ export default function FieldRowChildrenArrayContent({
   accesorName,
   provided,
 }: Props) {
-  const [isChildOpen, setIsChildOpen] = useState(true)
+  const [ids, setIds] = useOpenFlagIds()
+  const [isChildOpen, setIsChildOpen] = useState(
+    ids.includes(fieldRowCol?.id ?? 0)
+  )
+
+  console.log('fieldRowCol?.id ?? 0', fieldRowCol?.id ?? 0)
 
   const { control } = useFormContext<TableForm>()
 
@@ -42,7 +48,7 @@ export default function FieldRowChildrenArrayContent({
 
   const handleToggleChildOpen = useCallback((): void => {
     setIsChildOpen((prev) => !prev)
-  }, [setIsChildOpen])
+  }, [setIsChildOpen, setIds])
 
   return (
     <td

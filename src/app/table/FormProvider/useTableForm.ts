@@ -1,6 +1,8 @@
 'use client'
 
 import { useForm } from 'react-hook-form'
+import { useHydrateAtoms } from 'jotai/utils'
+import { openFlagIds } from '@/app/components/hooks/useAllOpenFlag'
 
 export type TableForm = {
   tableData: TableRow[]
@@ -17,6 +19,7 @@ export type TableCell = {
   title: string
   // MEMO: サーバから返ってくるかどうかは今は考慮していないが、サーバ的には要らなそう。フロントの都合的には必要、と思ったけどフロントでもいらんかも
   value: string
+  showChildren?: boolean
   childrenArray?: (TableCellChild | null)[]
 }
 
@@ -25,6 +28,7 @@ export type TableCellChild = {
   title: string
   // MEMO: フロント用にサーバーから返ってくるnumberデータをstringにするみたいな処理を挟んだ方が良さそうだけど省略してサボる。ここら辺はPJによりけり
   value: string
+  showChildren?: boolean
 }
 
 // フロント用変換後前提のデータ
@@ -37,15 +41,17 @@ const DEFAULT_VALUES: TableForm['tableData'] = [
         id: 10,
         title: 'one',
         value: '',
+        showChildren: false,
         childrenArray: [
-          { id: 1000, title: 'one one', value: '11' },
-          { id: 1001, title: 'one one 2', value: '12' },
+          { id: 1000, title: 'one one', value: '11', showChildren: false },
+          { id: 1001, title: 'one one 2', value: '12', showChildren: false },
         ],
       },
       {
         id: 11,
         title: 'one',
         value: '',
+        showChildren: false,
         childrenArray: [
           { id: 1010, title: 'one one one', value: '111' },
           { id: 1011, title: 'one one one 2', value: '112' },
@@ -211,6 +217,8 @@ export const useTableForm = () => {
   const methods = useForm<TableForm>({
     defaultValues: { tableData: DEFAULT_VALUES },
   })
+
+  useHydrateAtoms([[openFlagIds, [10, 1000, 1001, 11]]])
 
   return methods
 }
